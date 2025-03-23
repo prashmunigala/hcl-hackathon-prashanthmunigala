@@ -23,31 +23,14 @@ resource "aws_subnet" "hcl_public_subnet" {
     Name = "hcl_public_subnet"
   }
 }
-# Subnets
+
 resource "aws_subnet" "hcl_public_subnet1" {
   vpc_id                  = aws_vpc.vpc_hcl.id
   cidr_block              = var.public_subnet1_cidr_block
   map_public_ip_on_launch = true
   availability_zone       = var.availability_zone1
   tags = {
-    Name = "hcl_public_subnet"
-  }
-}
-
-resource "aws_subnet" "hcl_private_subnet" {
-  vpc_id            = aws_vpc.vpc_hcl.id
-  cidr_block        = var.private_subnet_cidr_block
-  availability_zone = var.availability_zone
-  tags = {
-    Name = "hcl_private_subnet"
-  }
-}
-resource "aws_subnet" "hcl_private_subnet1" {
-  vpc_id            = aws_vpc.vpc_hcl.id
-  cidr_block        = var.private_subnet1_cidr_block
-  availability_zone = var.availability_zone2
-  tags = {
-    Name = "hcl_private_subnet"
+    Name = "hcl_public_subnet1"
   }
 }
 
@@ -123,7 +106,7 @@ resource "aws_lb" "hcl_app_lb" {
   internal                   = false
   load_balancer_type         = "application"
   security_groups            = [aws_security_group.hcl_lb_sg.id]
-  subnets                    = [aws_subnet.hcl_public_subnet.id]
+  subnets                    = [aws_subnet.hcl_public_subnet.id, aws_subnet.hcl_public_subnet1.id]
   enable_deletion_protection = false
 
   tags = {
