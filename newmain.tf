@@ -1,4 +1,4 @@
-
+# Provider
 provider "aws" {
   region = var.region
 }
@@ -101,7 +101,7 @@ resource "aws_ecr_repository" "hcl_ecr_repo" {
 
 # Load Balancer
 resource "aws_lb" "hcl_app_lb" {
-  name                       = var.lb_name
+  name                       = "hcl-app-lb"
   internal                   = false
   load_balancer_type         = "application"
   security_groups            = [aws_security_group.hcl_lb_sg.id]
