@@ -34,12 +34,13 @@ jobs:
       # Step 4: Build and tag Docker image, then push to ECR
       - name: Build and Push Docker Image to ECR
         run: |
-          echo "Building and tagging Docker image for service: ${{ matrix.service }}"
-          docker build -t 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }} ./{{ matrix.service }}
-          docker tag 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }} 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }}:latest
-          echo "Pushing Docker image to ECR..."
-          docker push 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }}
-          docker push 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }}:latest
+            echo "Building and tagging Docker image for service: ${{ matrix.service }}"
+            docker build -t 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }} ./${{ matrix.service }}
+            docker tag 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }} 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }}:latest
+            echo "Pushing Docker image to ECR..."
+            docker push 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }}
+            docker push 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }}:latest
+    
 
       # Step 5: Deploy the service to ECS/Fargate
       - name: Deploy to ECS/Fargate
