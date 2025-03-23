@@ -58,6 +58,7 @@ jobs:
         run: |
           echo "Deploying service: ${{ matrix.service }} to ECS/Fargate..."
           aws ecs update-service \
-            --cluster hcl_ecs_cluster \
-            --service appointmentapp \
-            --force-new-deployment
+          --cluster hcl_ecs_cluster \
+          --service appointmentapp \
+          --force-new-deployment
+
