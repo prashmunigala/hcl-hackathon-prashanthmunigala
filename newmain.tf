@@ -3,6 +3,15 @@ provider "aws" {
   region = var.region
 }
 
+terraform {
+  backend "s3" {
+    bucket = "mynewbuckethclprashanth"
+    key    = "terraform/state"
+    region = "us-east-1"
+    use_lockfile = true
+  }
+}
+
 # VPC
 resource "aws_vpc" "vpc_hcl" {
   cidr_block           = var.vpc_cidr_block
