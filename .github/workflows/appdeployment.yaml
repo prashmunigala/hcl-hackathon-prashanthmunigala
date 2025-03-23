@@ -1,6 +1,6 @@
 name: Build, Push, and Deploy to ECS/Fargate
 on:
-    workflow_dispatch: 
+  workflow_dispatch: 
 jobs:
   build-and-push-and-deploy:
     runs-on: ubuntu-latest
