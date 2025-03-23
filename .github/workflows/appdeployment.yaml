@@ -37,7 +37,7 @@ jobs:
         run: |
           echo "Building and tagging Docker image for service: ${{ matrix.service }}"
 
-          IMAGE_NAME="539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo/${{ matrix.service }}"
+          IMAGE_NAME="539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo"
     
           # Build the Docker image
           docker build -t $IMAGE_NAME ./${{ matrix.service }}
