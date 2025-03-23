@@ -1,0 +1,39 @@
+{
+    "family": "appointmentapp-task",
+    "networkMode": "awsvpc",
+    "executionRoleArn": "arn:aws:iam::539935451710:role/ecsTaskExecutionRole",
+    "taskRoleArn": "arn:aws:iam::539935451710:role/ecsTaskRole",
+    "requiresCompatibilities": ["FARGATE"],
+    "cpu": "512",
+    "memory": "1024",
+    "containerDefinitions": [
+      {
+        "name": "appointmentapp-container",
+        "image": "539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:latest",
+        "cpu": 256,
+        "memory": 512,
+        "essential": true,
+        "portMappings": [
+          {
+            "containerPort": 3000,
+            "hostPort": 3000,
+            "protocol": "tcp"
+          }
+        ],
+        "environment": [
+          {
+            "name": "ENV_KEY",
+            "value": "ENV_VALUE"
+          }
+        ],
+        "logConfiguration": {
+          "logDriver": "awslogs",
+          "options": {
+            "awslogs-group": "/ecs/appointmentapp",
+            "awslogs-region": "us-east-1",
+            "awslogs-stream-prefix": "ecs"
+          }
+        }
+      }
+    ]
+  }
