@@ -17,7 +17,7 @@ jobs:
         terraform_version: 1.4.6 
 
     - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v2
+      uses: aws-actions/configure-aws-cli@v2.2.0
       with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -25,7 +25,7 @@ jobs:
 
     - name: Terraform Init
       run: terraform init
-      
+
     - name: Terraform Validate
       run: terraform validate
 
