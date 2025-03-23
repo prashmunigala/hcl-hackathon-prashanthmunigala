@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        service: [appointmentapp, patient-app]  
+        service: [appointmentapp]  
 
     steps:
       # Step 1: Checkout the repository code
@@ -19,11 +19,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y awscli
+
       - name: Configure AWS CLI
         run: |
-            aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws configure set region us-east-1
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set region us-east-1
 
       # Step 3: Authenticate Docker with AWS ECR
       - name: Authenticate Docker with ECR
@@ -34,13 +35,23 @@ jobs:
       # Step 4: Build and tag Docker image, then push to ECR
       - name: Build and Push Docker Image to ECR
         run: |
-            echo "Building and tagging Docker image for service: ${{ matrix.service }}"
-            docker build -t 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }} ./${{ matrix.service }}
-            docker tag 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }} 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }}:latest
-            echo "Pushing Docker image to ECR..."
-            docker push 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }}
-            docker push 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }}:latest
+          echo "Building and tagging Docker image for service: ${{ matrix.service }}"
+
+          IMAGE_NAME="539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo/${{ matrix.service }}"
     
+          # Build the Docker image
+          docker build -t $IMAGE_NAME ./${{ matrix.service }}
+    
+          # Tag the Docker image with "latest"
+          docker tag $IMAGE_NAME $IMAGE_NAME:latest
+    
+          echo "Pushing Docker image to ECR..."
+        
+          # Push both tags to ECR
+          docker push $IMAGE_NAME
+          docker push $IMAGE_NAME:latest
+    
+          echo "Docker image pushed successfully!"
 
       # Step 5: Deploy the service to ECS/Fargate
       - name: Deploy to ECS/Fargate
