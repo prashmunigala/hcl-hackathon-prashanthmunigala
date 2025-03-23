@@ -1,18 +1,20 @@
 name: Build, Push, and Deploy to ECS/Fargate
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
   build-and-push-and-deploy:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [appointmentapp, patient-app]
+        service: [appointmentapp, patient-app]  
 
     steps:
+      # Step 1: Checkout the repository code
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Step 2: Configure AWS CLI for authentication and region setup
       - name: Configure AWS CLI
         uses: aws-actions/configure-aws-cli@v3
         with:
@@ -20,19 +22,26 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      # Step 3: Authenticate Docker with AWS ECR
       - name: Authenticate Docker with ECR
         run: |
+          echo "Authenticating Docker with AWS ECR..."
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 539935451710.dkr.ecr.us-east-1.amazonaws.com
 
+      # Step 4: Build and tag Docker image, then push to ECR
       - name: Build and Push Docker Image to ECR
         run: |
+          echo "Building and tagging Docker image for service: ${{ matrix.service }}"
           docker build -t 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }} ./{{ matrix.service }}
           docker tag 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }} 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }}:latest
+          echo "Pushing Docker image to ECR..."
           docker push 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }}
           docker push 539935451710.dkr.ecr.us-east-1.amazonaws.com/hcl_ecr_repo:${{ matrix.service }}:latest
 
+      # Step 5: Deploy the service to ECS/Fargate
       - name: Deploy to ECS/Fargate
         run: |
+          echo "Deploying service: ${{ matrix.service }} to ECS/Fargate..."
           aws ecs update-service \
             --cluster hcl_ecs_cluster \
             --service ${{ matrix.service }}-service \

@@ -1,7 +1,7 @@
 {
-    "name": "appointment-service",
+    "name": "patient-service",
     "version": "1.0.0",
-    "description": "A simple appointment booking service using Express.js",
+    "description": "A simple patient management service using Express.js",
     "main": "index.js",
     "scripts": {
       "start": "node index.js",
@@ -16,7 +16,7 @@
     "engines": {
       "node": ">=14.0.0"
     },
-    "keywords": ["express", "appointments", "API"],
+    "keywords": ["express", "patients", "API"],
     "author": "Your Name",
     "license": "MIT"
   }
