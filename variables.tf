@@ -18,3 +18,9 @@ variable "lb_name" {}
 variable "lb_security_group_name" {}
 
 variable "route_table_name" {}
+
+variable "public_subnet1_cidr_block" {}
+
+variable "availability_zone1" {}
+variable "private_subnet1_cidr_block" {}
+variable "availability_zone2" {}
