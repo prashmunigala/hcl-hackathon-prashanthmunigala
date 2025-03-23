@@ -1,0 +1,153 @@
+provider "aws" {
+    region = "us-east-1"
+}
+
+resource "aws_vpc" "vpc_hcl" {
+  cidr_block       = "10.0.0.0/16"
+  enable_dns_support = true
+  enable_dns_hostnames = true
+  tags = {
+    Name = "vpc_hcl"
+  }
+}
+
+resource "aws_subnet" "hcl_public_subnet" {
+    vpc_id = aws_vpc.vpc_hcl.id
+    cidr_block = "10.0.0.0/24"
+    map_public_ip_on_launch = true
+    availability_zone = "us-east-1a"
+    tags = {
+      Name = "hcl_public_subnet"
+    }
+}
+
+resource "aws_subnet" "hcl_private_subnet" {
+  vpc_id            = "aws_vpc.vpc_hcl.id"
+  cidr_block        = "10.0.2.0/24"
+  availability_zone = "us-east-1a"
+  tags = {
+    Name = "hcl_private_Subnet"
+  }
+}
+resource "aws_internet_gateway" "hcl_igw" {
+  vpc_id = aws_vpc.vpc_hcl.id
+  tags = {
+    Name = "hcl_igw"
+  }
+}
+resource "aws_route_table" "hcl_public_route_table" {
+    vpc_id = aws_vpc.vpc_hcl.id
+    tags = {
+          Name = "hcl_public_route_table"
+    }
+}
+resource "aws_route" "public_route" {
+  route_table_id         = aws_route_table.hcl_public_route_table.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.hcl_igw.id
+}
+resource "aws_route_table_association" "hcl_public_assosiation" {
+  subnet_id      = aws_subnet.hcl_public_subnet.id
+  route_table_id = aws_route_table.hcl_public_route_table.id
+}
+
+resource "aws_ecs_cluster" "hcl_ecs_cluster" {
+  name = "hcl_ecs_cluster"
+}
+resource "aws_iam_role" "hcl_ecs_iam_role" {
+  name = "hcl_ecs_iam_role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect    = "Allow"
+        Principal = {
+                    Service = "ecs-tasks.amazonaws.com"
+        }
+        Action    = "sts:AssumeRole"
+      }
+    ]
+  })
+}
+resource "aws_iam_policy_attachment" "hcl_ecs_role_attachment" {
+  name       = "hcl_ecs_role_attachment"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+  roles      = [aws_iam_role.hcl_ecs_iam_role.name]
+}
+resource "aws_ecr_repository" "hcl_ecr_repo" {
+  name                 = "hcl_ecr_repo"
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+  tags = {
+    Name = "hcl_ecr_repo"
+  }
+}
+resource "aws_lb" "hcl_app_lb" {
+  name               = "hcl_app_lb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.lb.id]
+  subnets            = [aws_subnet.public.id]
+  enable_deletion_protection = false
+
+  tags = {
+    Name = "application-load-balancer"
+  }
+}
+resource "aws_security_group" "hcl_lb_sg" {
+  name        = "hcl_lb_sg"
+  description = "Allow inbound access"
+  vpc_id      = aws_vpc.vpc_hcl.id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+    ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+      ingress {
+    from_port   = 3001
+    to_port     = 3001
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.main.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type = "fixed-response"
+    fixed_response {
+      content_type = "text/plain"
+      message_body = "ECS Application Load Balancer"
+      status_code  = "200"
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
