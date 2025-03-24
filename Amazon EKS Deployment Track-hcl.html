@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://hackathon.baywsf.com/devops/eks-track.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Amazon EKS Deployment Track</title>
+        <style>
+            :root {
+                --primary-blue: #0099d7;
+                --primary-green: #8bc63f;
+                --white: #ffffff;
+                --text-color: #333333;
+                --bg-color: #f4f4f4;
+            }
+            body, html {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                background-color: var(--bg-color);
+                color: var(--text-color);
+            }
+            .container {
+                max-width: 900px;
+                margin: 40px auto;
+                padding: 20px;
+                background-color: var(--white);
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+            h1 {
+                color: var(--white);
+                text-align: center;
+                margin: 0 0 20px;
+                padding: 20px 0;
+                background-color: var(--primary-blue);
+            }
+            a {
+                text-decoration: none;
+                color: var(--primary-blue);
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 id="amazon-eks-deployment-track">Amazon EKS Deployment Track</h1>
+            <h2 id="objective">Objective</h2>
+            <p>Deploy the containerized microservices to Amazon Elastic Kubernetes Service (EKS), demonstrating your skills in Kubernetes, containerization, and AWS services.</p>
+            <h2 id="technical-requirements">Technical Requirements</h2>
+            <ol>
+                <li>
+                    <p><strong>Infrastructure as Code (Terraform)</strong></p>
+                    <ul>
+                        <li>Provision a VPC with public and private subnets</li>
+                        <li>Set up an EKS cluster</li>
+                        <li>Configure necessary IAM roles and security groups</li>
+                        <li>Set up an ECR repository for your container images</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><strong>Containerization</strong></p>
+                    <ul>
+                        <li>Create a Dockerfile for the microservices</li>
+                        <li>Build and push the Docker image to ECR</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><strong>Kubernetes</strong></p>
+                    <ul>
+                        <li>Create Kubernetes deployment manifests</li>
+                        <li>Set up a service and ingress for your applications</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><strong>CI/CD (GitHub Actions)</strong></p>
+                    <ul>
+                        <li>Implement a workflow for Terraform (lint, plan, apply)</li>
+                        <li>Create a workflow for building and pushing Docker images</li>
+                        <li>Implement a workflow for deploying to EKS</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><strong>Monitoring and Logging</strong></p>
+                    <ul>
+                        <li>Set up CloudWatch for cluster and application logging</li>
+                        <li>(Bonus) Implement Prometheus and Grafana for monitoring</li>
+                    </ul>
+                </li>
+            </ol>
+            <h2 id="deliverables">Deliverables</h2>
+            <ol>
+                <li>
+                    <p>GitHub repository containing:</p>
+                    <ul>
+                        <li>Terraform code</li>
+                        <li>Dockerfiles</li>
+                        <li>Kubernetes manifests</li>
+                        <li>GitHub Actions workflows</li>
+                        <li>Application code (provided microservices)</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Documentation:</p>
+                    <ul>
+                        <li>Architecture diagram</li>
+                        <li>Setup and deployment instructions</li>
+                        <li>Monitoring and logging overview</li>
+                    </ul>
+                </li>
+            </ol>
+            <h2 id="evaluation-criteria">Evaluation Criteria</h2>
+            <ol>
+                <li>EKS cluster configuration and security</li>
+                <li>Kubernetes resource management and best practices</li>
+                <li>CI/CD pipeline efficiency and reliability</li>
+                <li>IaC quality and modularity</li>
+                <li>Containerization best practices</li>
+                <li>Monitoring and logging effectiveness</li>
+                <li>Documentation clarity and completeness</li>
+            </ol>
+            <p><a href="https://hackathon.baywsf.com/devops/index.html">Back to main page</a></p>
+        </div>
+    
+
+</body></html>

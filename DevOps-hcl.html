@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)https://hackathon.baywsf.com/devops/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DevOps</title>
+        <style>
+            :root {
+                --primary-blue: #0099d7;
+                --primary-green: #8bc63f;
+                --white: #ffffff;
+                --text-color: #333333;
+                --bg-color: #f4f4f4;
+            }
+            body, html {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                background-color: var(--bg-color);
+                color: var(--text-color);
+            }
+            .container {
+                max-width: 900px;
+                margin: 40px auto;
+                padding: 20px;
+                background-color: var(--white);
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+            h1 {
+                color: var(--white);
+                text-align: center;
+                margin: 0 0 20px;
+                padding: 20px 0;
+                background-color: var(--primary-blue);
+            }
+            a {
+                text-decoration: none;
+                color: var(--primary-blue);
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 id="devops-hackathon-challenge-containerized-microservices-deployment">DevOps Hackathon Challenge: Containerized Microservices Deployment</h1>
+            <h2 id="overview">Overview</h2>
+            <p>
+                Welcome to the DevOps Hackathon Challenge! In this hackathon, you will demonstrate your skills in containerization, Infrastructure as Code (IaC), CI/CD, and cloud deployment using AWS services. You will be working with a
+                simple healthcare application consisting of two microservices.
+            </p>
+            <h3 id="challenge-structure">Challenge Structure</h3>
+            <p>This hackathon offers three deployment tracks. Each team should choose one track to focus on:</p>
+            <ol>
+                <li><a href="https://hackathon.baywsf.com/devops/eks-track.html">Amazon EKS Deployment Track</a></li>
+                <li><a href="https://hackathon.baywsf.com/devops/fargate-track.html">AWS Fargate Deployment Track</a></li>
+                <li><a href="https://hackathon.baywsf.com/devops/lambda-track.html">AWS Lambda Container Deployment Track</a></li>
+            </ol>
+            <h3 id="common-requirements">Common Requirements</h3>
+            <p>Regardless of the track you choose, you will be working with the following common elements:</p>
+            <ol>
+                <li>
+                    <p>
+                        <strong>Microservices</strong>: You will be provided with two Node.js microservices - a Patient Service and an Appointment Service. The code for these services can be found in the
+                        <a href="https://hackathon.baywsf.com/devops/microservices-code.html">Sample Microservices Code</a> file.
+                    </p>
+                </li>
+                <li>
+                    <p><strong>Containerization</strong>: You need to containerize these microservices using Docker.</p>
+                </li>
+                <li>
+                    <p><strong>Infrastructure as Code (Terraform)</strong>:</p>
+                    <ul>
+                        <li>Set up a Terraform project structure supporting multiple environments (dev, staging, prod).</li>
+                        <li>
+                            Provision the following AWS resources:
+                            <ul>
+                                <li>VPC with public and private subnets across two availability zones</li>
+                                <li>IAM roles and security groups</li>
+                                <li>S3 bucket for Terraform state storage</li>
+                                <li>DynamoDB table for state locking</li>
+                                <li>(Other resources specific to your chosen track)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <p><strong>Terraform State Management</strong>:</p>
+                    <ul>
+                        <li>Implement remote state storage using S3</li>
+                        <li>Set up state locking with DynamoDB</li>
+                        <li>Configure workspace separation for different environments</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><strong>GitHub Actions for IaC</strong>:</p>
+                    <ul>
+                        <li>
+                            Create workflows for:
+                            <ul>
+                                <li>Terraform fmt and validate on all PRs</li>
+                                <li>Terraform plan on pull requests</li>
+                                <li>Terraform apply on merges to main branch</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <p><strong>CI/CD</strong>: Implement a CI/CD pipeline using GitHub Actions for your application code.</p>
+                </li>
+                <li>
+                    <p><strong>Monitoring and Logging</strong>: Set up basic monitoring and logging using AWS CloudWatch.</p>
+                </li>
+            </ol>
+            <h3 id="time-allocation">Time Allocation</h3>
+            <p>You will have 5 hours to complete this challenge. Budget your time wisely across planning, development, deployment, and documentation.</p>
+            <h3 id="evaluation-criteria">Evaluation Criteria</h3>
+            <p>While specific criteria vary by track, you will generally be evaluated on:</p>
+            <ol>
+                <li>Correct implementation of the chosen deployment platform</li>
+                <li>Quality and security of the IaC implementation</li>
+                <li>Effectiveness of the CI/CD pipeline</li>
+                <li>Containerization best practices</li>
+                <li>Monitoring and logging setup</li>
+                <li>Documentation quality</li>
+                <li>Overall architecture and security considerations</li>
+                <li>Proper implementation of Terraform state management and collaboration features</li>
+            </ol>
+            <h3 id="getting-started">Getting Started</h3>
+            <ol>
+                <li>Review the common requirements and evaluation criteria.</li>
+                <li>Choose your deployment track: <a href="https://hackathon.baywsf.com/devops/eks-track.html">EKS</a>, <a href="https://hackathon.baywsf.com/devops/fargate-track.html">Fargate</a>, or <a href="https://hackathon.baywsf.com/devops/lambda-track.html">Lambda Container</a>.</li>
+                <li>Follow the specific instructions for your chosen track.</li>
+                <li>Use the provided <a href="https://hackathon.baywsf.com/devops/microservices-code.html">microservices code</a> as a starting point for your application.</li>
+            </ol>
+            <p>Good luck, and happy coding!</p>
+        </div>
+    
+
+</body></html>
